@@ -1,32 +1,22 @@
 import streamlit as st
-import torch
-from torchvision import datasets, transforms
-import matplotlib.pyplot as plt
-import random
 
-# Load MNIST dataset
-@st.cache_data
-def load_mnist():
-    transform = transforms.ToTensor()
-    mnist_data = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    return mnist_data
+# Set app title
+st.title("Number Input and Image Viewer")
 
-mnist_data = load_mnist()
+# Number input
+number = st.number_input("Enter a number", min_value=0, step=1)
 
-st.title("MNIST Digit Viewer")
-digit = st.number_input("Enter a digit (0-9):", min_value=0, max_value=9, step=1)
+# Displaying 5 images
+st.subheader(f"Showing 5 images for input: {number}")
 
-# Filter images matching the selected digit
-matching_images = [img for img, label in mnist_data if label == digit]
-selected_images = random.sample(matching_images, k=5)
+# Placeholder images (use your own URLs or file paths if needed)
+image_urls = [
+    "https://via.placeholder.com/150?text=Image+1",
+    "https://via.placeholder.com/150?text=Image+2",
+    "https://via.placeholder.com/150?text=Image+3",
+    "https://via.placeholder.com/150?text=Image+4",
+    "https://via.placeholder.com/150?text=Image+5",
+]
 
-# Display images
-st.subheader(f"5 examples of digit: {digit}")
-cols = st.columns(5)
-
-for idx, col in enumerate(cols):
-    img = selected_images[idx].squeeze(0).numpy()
-    fig, ax = plt.subplots()
-    ax.imshow(img, cmap='gray')
-    ax.axis('off')
-    col.pyplot(fig)
+for i, url in enumerate(image_urls, 1):
+    st.image(url, caption=f"Image {i}", use_column_width=True)
