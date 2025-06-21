@@ -26,11 +26,15 @@ def show_images(images):
         axs[i].axis("off")
     st.pyplot(fig)
 
-# Streamlit UI
-st.title("MNIST Digit Generator")
-digit = st.number_input("Enter a digit (0-9):", min_value=0, max_value=9, step=1)
 
-if st.button("Generate Images"):
-    model = load_model()
-    imgs = generate_images(model, digit)
-    show_images(imgs)
+if __name__ == "__main__":
+    # Streamlit UI
+    st.title("MNIST Digit Generator")
+    digit = st.number_input("Enter a digit (0-9):", min_value=0, max_value=9, step=1)
+
+    if st.button("Generate Images"):
+        model = load_model()
+        imgs = generate_images(model, digit)
+        show_images(imgs)
+
+
